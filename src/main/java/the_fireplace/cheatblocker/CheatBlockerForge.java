@@ -1,0 +1,72 @@
+package the_fireplace.cheatblocker;
+
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.*;
+import org.apache.logging.log4j.Logger;
+import the_fireplace.cheatblocker.abstraction.IConfig;
+import the_fireplace.cheatblocker.forge.ForgePermissionHandler;
+import the_fireplace.cheatblocker.forge.compat.ForgeMinecraftHelper;
+import the_fireplace.cheatblocker.logic.ServerEventLogic;
+import the_fireplace.cheatblocker.sponge.SpongePermissionHandler;
+
+import java.util.Objects;
+
+import static the_fireplace.cheatblocker.CheatBlocker.MODID;
+
+@Mod.EventBusSubscriber(modid = MODID)
+@Mod(modid = MODID, name = CheatBlocker.MODNAME, version = CheatBlocker.VERSION, acceptedMinecraftVersions = "[1.12,1.13)", acceptableRemoteVersions = "*", dependencies="after:spongeapi", certificateFingerprint = "51ac068a87f356c56dc733d0c049a9a68bc7245c")
+public final class CheatBlockerForge {
+    @Mod.Instance(MODID)
+    public static the_fireplace.cheatblocker.CheatBlockerForge instance;
+
+    private static Logger LOGGER = FMLLog.log;
+    private boolean validJar = true;
+
+    public static Logger getLogger() {
+        return LOGGER;
+    }
+
+    @Mod.EventHandler
+    public void preInit(FMLPreInitializationEvent event) {
+        CheatBlocker.setMinecraftHelper(new ForgeMinecraftHelper());
+        CheatBlocker.setConfig(new cfg());
+        LOGGER = event.getModLog();
+        if(!validJar)
+            CheatBlocker.getMinecraftHelper().getLogger().error("The jar's signature is invalid! Please redownload from "+Objects.requireNonNull(Loader.instance().activeModContainer()).getUpdateUrl());
+    }
+
+    @Mod.EventHandler
+    public void postInit(FMLPostInitializationEvent event){
+        if(CheatBlocker.getMinecraftHelper().isPluginLoaded("spongeapi"))
+            CheatBlocker.setPermissionManager(new SpongePermissionHandler());
+        else
+            CheatBlocker.setPermissionManager(new ForgePermissionHandler());
+    }
+
+    @Mod.EventHandler
+    public void onServerStart(FMLServerStartingEvent event) {
+        ServerEventLogic.onServerStarting(event.getServer());
+    }
+
+    @Mod.EventHandler
+    public void onServerStop(FMLServerStoppingEvent event) {
+        ServerEventLogic.onServerStopping();
+    }
+
+    @Mod.EventHandler
+    public void invalidFingerprint(FMLFingerprintViolationEvent e) {
+        if(!e.isDirectory()) {
+            validJar = false;
+        }
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    @Config(modid = MODID)
+    private static class cfg implements IConfig {
+        //General mod configuration
+        //todo
+    }
+}

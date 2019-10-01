@@ -1,0 +1,24 @@
+[
+  {
+    "modid": "cheatblocker",
+    "name": "Cheat Blocker",
+    "description": "A server-side mod to prevent people from cheating.",
+    "version": "${version}",
+    "mcversion": "",
+    "logoFile": "",
+    "url": "https://www.curseforge.com/minecraft/mc-mods/cheat-blocker",
+    "authorList": ["The_Fireplace", "Eleksploded"],
+    "screenshots": []
+  },
+  {
+    "modid": "cheatblockersponge",
+    "name": "Cheat Blocker Sponge",
+    "description": "A plugin to prevent people from cheating.",
+    "version": "${version}",
+    "mcversion": "",
+    "logoFile": "",
+    "url": "https://www.curseforge.com/minecraft/mc-mods/cheat-blocker",
+    "authorList": ["The_Fireplace", "Eleksploded"],
+    "screenshots": []
+  }
+]
