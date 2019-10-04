@@ -26,6 +26,7 @@ public class NoFall {
         if(!event.player.onGround && (!fallHeights.containsKey(event.player.getUniqueID()) || fallHeights.get(event.player.getUniqueID()).getY() < event.player.getPosition().getY()))
             fallHeights.put(event.player.getUniqueID(), event.player.getPosition());
         else if(event.player.onGround && fallHeights.containsKey(event.player.getUniqueID())) {
+            //TODO handling for blocks like water, slime, web, etc that would have an impact on fall damage
             BlockPos heightPos = fallHeights.get(event.player.getUniqueID());
             if(heightPos.getY() - event.player.getPosition().getY() >= FALL_DAMAGE_DIST) {
                 //double fall damage as penalty for trying to nofall
