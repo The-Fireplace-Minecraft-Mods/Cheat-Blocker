@@ -61,6 +61,7 @@ public final class CheatBlockerSponge {
     private ConfigurationLoader<CommentedConfigurationNode> loader;
 
     private ConfigurationNode group;
+    private ConfigurationNode nofall;
 
     private void loadConfig() throws IOException {
         boolean needsSaving = false;
@@ -77,28 +78,47 @@ public final class CheatBlockerSponge {
         }
 
         group = root.getNode("general");
-        if (group.isVirtual()) {
+        needsSaving = loadVirtualGroup(needsSaving, root, group, "general");
+
+        nofall = root.getNode("nofall");
+        needsSaving = loadVirtualGroup(needsSaving, root, nofall, "nofall");
+
+        if (needsSaving)
+            loader.save(root);
+    }
+
+    /**
+     * Loads the group's values if it doesn't yet exist in config
+     * @return
+     * true if the group was loaded from virtual and needs to be saved, false otherwise
+     * @throws IOException if the default config file can't be found
+     */
+    private boolean loadVirtualGroup(boolean needsSaving, CommentedConfigurationNode root, ConfigurationNode node, String name) throws IOException {
+        if (node.isVirtual()) {
             ConfigurationLoader<CommentedConfigurationNode> defaults =
                     HoconConfigurationLoader.builder()
                             .setURL(Sponge.getAssetManager()
                                     .getAsset(this, "defaults.conf").get()
                                     .getUrl())
                             .build();
-            CommentedConfigurationNode defgroup = defaults.load(ConfigurationOptions.defaults()).getNode("general");
-            group.mergeValuesFrom(defgroup);
+            CommentedConfigurationNode defgroup = defaults.load(ConfigurationOptions.defaults()).getNode(name);
+            node.mergeValuesFrom(defgroup);
             //set the value (i assume merging values does not clear the virtual flag)
-            root.getNode("general").setValue(group);
+            root.getNode(name).setValue(node);
             needsSaving = true;
         }
-
-        if (needsSaving)
-            loader.save(root);
+        return needsSaving;
     }
 
     public class cfg implements IConfig {
         @Override
         public String getLocale() {
             return group.getNode("locale").getString("en_us");
+        }
+
+        @Override
+        public boolean preventNofall() {
+            return nofall.getNode("prevent").getBoolean(true);
         }
 
         //@Override

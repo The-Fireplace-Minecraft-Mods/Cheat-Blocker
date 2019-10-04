@@ -65,5 +65,15 @@ public final class CheatBlockerForge {
         public String getLocale() {
             return locale;
         }
+
+        @Override
+        public boolean preventNofall() {
+            return nofallcfg.prevent;
+        }
+    }
+
+    @Config(modid = MODID, category = "nofall")
+    private static class nofallcfg {
+        public static boolean prevent = true;
     }
 }
