@@ -7,12 +7,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod.EventBusSubscriber(value = Side.CLIENT, modid = the_fireplace.cheatblocker.CheatBlocker.MODID)
+@Mod.EventBusSubscriber(value = Side.CLIENT, modid = CheatBlocker.MODID)
 public class ClientEvents {
     @SubscribeEvent
     public static void configChanged(ConfigChangedEvent event) {
-        if (event.getModID().equals(the_fireplace.cheatblocker.CheatBlocker.MODID)) {
-            ConfigManager.sync(the_fireplace.cheatblocker.CheatBlocker.MODID, Config.Type.INSTANCE);
+        if (event.getModID().equals(CheatBlocker.MODID)) {
+            ConfigManager.sync(CheatBlocker.MODID, Config.Type.INSTANCE);
         }
     }
 }

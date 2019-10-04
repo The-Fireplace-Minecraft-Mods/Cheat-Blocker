@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import the_fireplace.cheatblocker.CheatBlocker;
 
 import java.io.*;
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 public final class PlayerDataManager {
     private static HashMap<UUID, PlayerData> playerData = Maps.newHashMap();
-    private static final File playerDataLocation = new File(the_fireplace.cheatblocker.CheatBlocker.getMinecraftHelper().getServer().getWorld(0).getSaveHandler().getWorldDirectory(), "cheatblocker/player");
+    private static final File playerDataLocation = new File(CheatBlocker.getMinecraftHelper().getServer().getWorld(0).getSaveHandler().getWorldDirectory(), "cheatblocker/player");
 
     //region getters
     //public static boolean getIgnoresCensor(UUID player) {

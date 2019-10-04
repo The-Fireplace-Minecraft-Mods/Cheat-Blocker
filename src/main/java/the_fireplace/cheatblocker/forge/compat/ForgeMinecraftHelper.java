@@ -4,6 +4,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import org.apache.logging.log4j.Logger;
+import the_fireplace.cheatblocker.CheatBlockerForge;
 import the_fireplace.cheatblocker.abstraction.IMinecraftHelper;
 
 public class ForgeMinecraftHelper implements IMinecraftHelper {
@@ -19,6 +20,6 @@ public class ForgeMinecraftHelper implements IMinecraftHelper {
 
     @Override
     public Logger getLogger() {
-        return the_fireplace.cheatblocker.CheatBlockerForge.getLogger();
+        return CheatBlockerForge.getLogger();
     }
 }

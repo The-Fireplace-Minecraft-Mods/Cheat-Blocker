@@ -13,16 +13,11 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
-import org.spongepowered.api.event.game.state.GameStoppingServerEvent;
 import org.spongepowered.api.plugin.Dependency;
 import org.spongepowered.api.plugin.Plugin;
 import the_fireplace.cheatblocker.abstraction.IConfig;
-import the_fireplace.cheatblocker.logic.ServerEventLogic;
 import the_fireplace.cheatblocker.sponge.SpongePermissionHandler;
 import the_fireplace.cheatblocker.sponge.compat.SpongeMinecraftHelper;
-import the_fireplace.cheatblocker.sponge.listener.NetworkListeners;
-import the_fireplace.cheatblocker.sponge.listener.PlayerListeners;
-import the_fireplace.cheatblocker.sponge.listener.TimingHandler;
 
 import java.io.IOException;
 
@@ -45,9 +40,7 @@ public final class CheatBlockerSponge {
     @Listener
     public void init(GameInitializationEvent event) {
         if(active) {
-            Sponge.getGame().getEventManager().registerListeners(this, new NetworkListeners());
-            Sponge.getGame().getEventManager().registerListeners(this, new PlayerListeners());
-            new TimingHandler();
+            //Sponge.getGame().getEventManager().registerListeners(this, new NetworkListeners());
         }
     }
 
@@ -60,14 +53,6 @@ public final class CheatBlockerSponge {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            ServerEventLogic.onServerStarting(CheatBlocker.getMinecraftHelper().getServer());
-        }
-    }
-
-    @Listener
-    public void onServerStopping(GameStoppingServerEvent event) {
-        if(active) {
-            ServerEventLogic.onServerStopping();
         }
     }
 
