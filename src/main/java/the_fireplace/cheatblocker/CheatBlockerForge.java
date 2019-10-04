@@ -58,6 +58,12 @@ public final class CheatBlockerForge {
     @Config(modid = MODID)
     private static class cfg implements IConfig {
         //General mod configuration
-        //todo
+        @Config.Comment("Server locale - the client's locale takes precedence if Cheat Blocker is installed there.")
+        public static String locale = "en_us";
+
+        @Override
+        public String getLocale() {
+            return locale;
+        }
     }
 }

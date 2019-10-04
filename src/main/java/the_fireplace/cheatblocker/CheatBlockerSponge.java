@@ -96,10 +96,10 @@ public final class CheatBlockerSponge {
     }
 
     public class cfg implements IConfig {
-        //@Override
-        //public String getLocale() {
-        //    return group.getNode("locale").getString("en_us");
-        //}
+        @Override
+        public String getLocale() {
+            return group.getNode("locale").getString("en_us");
+        }
 
         //@Override
         //public List<String> getStringsToCensor() {
@@ -109,11 +109,6 @@ public final class CheatBlockerSponge {
         //        e.printStackTrace();
         //        return Collections.emptyList();
         //    }
-        //}
-
-        //@Override
-        //public boolean useCache() {
-        //    return group.getNode("useCache").getBoolean(true);
         //}
     }
 }
